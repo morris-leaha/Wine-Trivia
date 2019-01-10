@@ -1,18 +1,100 @@
 $(document).ready(function() {
     //what's showing on start screen
     $("#submit-btn").hide();
-    $("#questions").hide();
+    $("#currentQ").hide();
     $("#user-report").hide();
+    $("#reset").hide();
+    $(".timer").html("Time Remaining: " + " 00:30").hide();
 
     //functions when button clicks happen 
     $("#start-btn").on("click", start);
     $("#submit-btn").on("click",report);
     $("#reset").on("click", reset);
 
+    var intervalId;
+    var time = 30;
+    var correct = 0;
+
+    function start() {
+        $("#currentQ").show();
+        $("#submit-btn").show();
+        $(".timer").show();
+        $("#start-btn").hide();
+        currentQuestion();
+    }
+
+    function decrement() {
+        time--;
+        var converted = timeConverter(time);
+        $(".timer").html("Time Remaining: " + converted);
+    
+        if (time === 0) {
+            report();
+        }
+    }
+    
+    function timeConverter(t) {
+        var minutes = Math.floor(t / 60);
+        var seconds = t - (minutes * 60);
+    
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+    
+        if (minutes === 0) {
+            minutes = "0";
+        }
+    
+        else if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+    
+        return minutes + ":" + seconds;
+    }
+
+    function report() {
+        clearInterval(intervalId);
+        $("#currentQ").hide();
+        $("#submit-btn").hide();
+        $(".timer").hide();
+        $("#user-report").show();
+        $("#reset").show();
+        
+        if (correct === 10) {
+            $("#msg").html("Perfect Score -- You must be a wine connoisseur!");
+        } else if (correct < 10 && correct >= 6) {
+            $("#msg").html("Nicely Done! You must be a wine lover! -- Try Again?");
+        } else if (correct < 6 && correct >= 1) {
+            $("#msg").html("Better Luck Next Time! -- Try Again?");
+        } else {
+            $("#msg").html("Wah, Wah, Wah... -- Try Again?");
+        }
+    }
+
+    function reset() {
+        correct = 0;
+        incorrect = 0;
+        unanswered = 10;
+        
+        $("#currentQ").hide();
+        $("#user-report").hide();
+        $("#submit-btn").hide();
+        $("#reset").hide();
+        $("#start-btn").show();
+    
+        //function to uncheck radio buttons
+        // $('#questions').find("input:radio:checked").prop('checked', false);
+    }
+
     var questionNum = 0;
     var correctAnswer = "";
+    var currentQ;
 
     function currentQuestion () {
+        clearInterval(intervalId);
+        time = 30;
+        intervalId = setInterval(decrement,1000);
+
         var title = $("<h6>")
             .addClass("card-header")
             .text("Question #: " + questionNum + 1);
@@ -21,6 +103,11 @@ $(document).ready(function() {
         var text = $("<h5>")
             .addClass("card-text")
             .text(questions[questionNum].question);
+
+        title.append("#current-question");
+        body.append("#current-question");
+        text.append("#current-question");
+        
         //for loop
     }
 

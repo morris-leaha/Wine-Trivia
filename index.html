@@ -22,25 +22,45 @@
 
     <section class="main-section">
 
-        <div class="start-screen">
-            <button type="button" class="btn btn-secondary btn-block" id="start-btn">Start</button>
+        <div class="row">
+            <div class="col">
+                <div class="start">
+                    <button type="button" class="btn btn-secondary btn-block" id="start-btn">Start</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-right">
+                <div class="timer"></div>
+            </div>
         </div>
 
         <div class="row">
             <div class="col">
-                <div id="currQues" class="card">
+                <div id="current-question" class="card">
 
                 </div>
             </div>
         </div>
-        <div class="submit">
-            <button type="button" class="btn btn-secondary btn-block" id="submit-btn">Submit</button>
-        </div>
 
-        <div class="user-report">
-
+        <div class="row">
+            <div class="col">
+                <div class="submit">
+                    <button type="button" class="btn btn-secondary btn-block" id="submit-btn">Submit</button>
+                </div>
+            </div>
         </div>
-            
+        
+        <div class="row">
+            <div class="col">
+                <div id="user-report">
+                    <span id="msg"></span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-block" id="reset">Start Over</button>
+        </div>
+        
     </section>
 
     <footer class="footer">
